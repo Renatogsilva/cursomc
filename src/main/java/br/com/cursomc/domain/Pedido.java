@@ -1,7 +1,11 @@
 package br.com.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -43,6 +48,18 @@ public class Pedido implements Serializable {
 	@JoinColumn(name = "endereco_de_entraga_id")
 	private Endereco enderecoDeEntraga;
 
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
+	
+	public List<Pedido> getPedidos(){
+		List<Pedido> lista = new ArrayList<>();
+		for (ItemPedido x : itens) {
+			lista.add(x.getPedido());
+		}
+		
+		return lista;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -81,6 +98,14 @@ public class Pedido implements Serializable {
 
 	public void setEndereco(Endereco endereco) {
 		this.enderecoDeEntraga = endereco;
+	}
+	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
 	}
 
 	@Override
