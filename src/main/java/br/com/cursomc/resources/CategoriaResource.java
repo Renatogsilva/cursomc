@@ -22,8 +22,8 @@ public class CategoriaResource {
 	private CategoriaService categoriaService;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> consulteCategoriaPorId(@PathVariable Integer id) {
-		Categoria categoria = categoriaService.Consulte(id);
+	public ResponseEntity<Categoria> consulteCategoriaPorId(@PathVariable Integer id) {
+		Categoria categoria = categoriaService.consulte(id);
 		
 		return ResponseEntity.ok().body(categoria);
 	}
@@ -33,5 +33,13 @@ public class CategoriaResource {
 		categoria = categoriaService.cadastre(categoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(categoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> atualize(@RequestBody Categoria categoria, @PathVariable Integer id){
+		categoria.setId(id);
+		categoria = categoriaService.atualize(categoria);
+
+		return ResponseEntity.noContent().build();
 	}
 }

@@ -17,8 +17,8 @@ public class PedidoResource {
 	@Autowired
 	private PedidoService pedidoService;
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> consultePedidoPorId(@PathVariable Integer id) {
-		Pedido pedido = pedidoService.Consulte(id);
+	public ResponseEntity<Pedido> consultePedidoPorId(@PathVariable Integer id) {
+		Pedido pedido = pedidoService.consulte(id);
 		
 		return ResponseEntity.ok().body(pedido);
 	}

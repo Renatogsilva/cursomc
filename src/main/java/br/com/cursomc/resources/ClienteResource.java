@@ -17,8 +17,8 @@ public class ClienteResource {
 	@Autowired
 	private ClienteService clienteService;
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> consulteClientePorId(@PathVariable Integer id) {
-		Cliente cliente = clienteService.Consulte(id);
+	public ResponseEntity<Cliente> consulteClientePorId(@PathVariable Integer id) {
+		Cliente cliente = clienteService.consulte(id);
 		
 		return ResponseEntity.ok().body(cliente);
 	}
