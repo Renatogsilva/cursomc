@@ -33,8 +33,11 @@ public class CategoriaService {
 	}
 	
 	public Categoria atualize(Categoria categoria) {
-		consulte(categoria.getId());
-		return _repository.save(categoria);
+		Categoria objeto = consulte(categoria.getId());
+		
+		convertaDTOParaObjeto(categoria, objeto);
+		
+		return _repository.save(objeto);
 	}
 	
 	public void deletar(Integer id) {
@@ -58,5 +61,10 @@ public class CategoriaService {
 	
 	public Categoria fromDTO(CategoriaDTO dto) {
 		return new Categoria(dto.getId(), dto.getNome());
+	}
+	
+	private void convertaDTOParaObjeto(Categoria categoria, Categoria categoriaObjeto) {
+		categoriaObjeto.setId(categoria.getId());
+		categoriaObjeto.setNome(categoria.getNome());
 	}
 }
