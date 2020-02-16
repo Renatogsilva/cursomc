@@ -19,7 +19,6 @@ import br.com.cursomc.dto.ClienteDTO;
 import br.com.cursomc.dto.ClienteNewDTO;
 import br.com.cursomc.exceptions.DataIntegrityException;
 import br.com.cursomc.exceptions.ObjectNotFoundException;
-import br.com.cursomc.repositories.CidadeRepository;
 import br.com.cursomc.repositories.ClienteRepository;
 import br.com.cursomc.repositories.EnderecoRepository;
 
@@ -28,9 +27,6 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository _repository;
-	
-	@Autowired
-	private CidadeRepository _repositoryCidade;
 	
 	@Autowired
 	private EnderecoRepository _repositoryEndereco;
