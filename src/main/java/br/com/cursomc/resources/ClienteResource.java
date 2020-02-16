@@ -19,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.cursomc.domain.Cliente;
 import br.com.cursomc.dto.ClienteDTO;
+import br.com.cursomc.dto.ClienteNewDTO;
 import br.com.cursomc.services.ClienteService;
 
 @RestController
@@ -35,10 +36,10 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> cadastre(@Valid @RequestBody ClienteDTO clienteDTO){
-		Cliente cliente = clienteService.fromDTO(clienteDTO);
+	public ResponseEntity<Void> cadastre(@Valid @RequestBody ClienteNewDTO clienteNewDTO){
+		Cliente cliente = clienteService.fromDTO(clienteNewDTO);
 		cliente = clienteService.cadastre(cliente);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteDTO.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(cliente.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	
@@ -66,8 +67,7 @@ public class ClienteResource {
 	}
 	
 	@RequestMapping(value="/page", method = RequestMethod.GET)
-	public ResponseEntity<Page<ClienteDTO>> consulteListaClientesPorPagina(
-																				@RequestParam(value="page", defaultValue = "0") Integer page,
+	public ResponseEntity<Page<ClienteDTO>> consulteListaClientesPorPagina(		@RequestParam(value="page", defaultValue = "0") Integer page,
 																				@RequestParam(value="linesPerPage", defaultValue = "24") Integer linesPerPage,
 																				@RequestParam(value="orderBy", defaultValue = "nome") String orderBy,
 																				@RequestParam(value="direction", defaultValue = "ASC") String direction) {
