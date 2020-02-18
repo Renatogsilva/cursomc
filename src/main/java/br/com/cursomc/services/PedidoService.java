@@ -36,6 +36,10 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
+	@Autowired
+	private EmailService emailService;
+	
+	
 	public Pedido cadastre(Pedido pedido) {
 		pedido.setInstante(new Date());
 		pedido.setCliente(clienteService.consulte(pedido.getCliente().getId()));
@@ -58,7 +62,8 @@ public class PedidoService {
 		}
 		
 		_repositoryItemPedido.saveAll(pedido.getItens());
-		System.out.println(pedido);
+		emailService.sendOrderConfirmationEmail(pedido);
+		
 		return pedido;
 	}
 	
