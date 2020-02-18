@@ -14,7 +14,6 @@ import br.com.cursomc.exceptions.ObjectNotFoundException;
 import br.com.cursomc.repositories.ItemPedidoRepository;
 import br.com.cursomc.repositories.PagamentoRepository;
 import br.com.cursomc.repositories.PedidoRepository;
-import br.com.cursomc.repositories.ProdutoRepository;
 
 @Service
 public class PedidoService {
@@ -34,8 +33,12 @@ public class PedidoService {
 	@Autowired
 	private ItemPedidoRepository _repositoryItemPedido;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 	public Pedido cadastre(Pedido pedido) {
 		pedido.setInstante(new Date());
+		pedido.setCliente(clienteService.consulte(pedido.getCliente().getId()));
 		pedido.getPagamento().setEstadoPagamento(EstadoPagamento.PENDENTE);
 		pedido.getPagamento().setPedido(pedido);
 		
@@ -49,11 +52,13 @@ public class PedidoService {
 		
 		for(ItemPedido item: pedido.getItens()) {
 			item.setDesconto(0.0);
-			item.setPreco(produtoService.consulte(item.getProduto().getId()).getPreco());
+			item.setProduto(produtoService.consulte(item.getProduto().getId()));
+			item.setPreco(item.getProduto().getPreco());
 			item.setPedido(pedido);
 		}
 		
 		_repositoryItemPedido.saveAll(pedido.getItens());
+		System.out.println(pedido);
 		return pedido;
 	}
 	
