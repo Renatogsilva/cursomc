@@ -125,6 +125,7 @@ public class DBService {
 		Cliente cl1 = new Cliente(null, "Maria Silva", "silvarenato180@gmail.com", "041.423.317-88", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("123456789"));
 		Cliente cl2 = new Cliente(null, "João Neto Silva", "renato.silva.55@hotmail.com", "427.364.550-53", TipoCliente.PESSOA_FISICA, passwordEncoder.encode("123456789"));
 		cl2.addPerfil(Perfil.ADMIN);
+		cl1.addPerfil(Perfil.CLIENTE);
 		
 		Endereco ed1 = new Endereco(null, "Rua 12", "QD27 LT28", "Entre a Rua 1 e Santos Dumont", "Residencial Parque das Palmeiras", "76386180", cl1, c1);
 		Endereco ed2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "76389880", cl1, c2);
